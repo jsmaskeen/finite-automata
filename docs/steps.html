@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kameda-Weiner Minimization For Given NFA</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/viz.js/2.1.2/viz.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/viz.js/2.1.2/full.render.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            line-height: 1.6;
+            background-color: #f9f9f9;
+        }
+
+        h1 {
+            color: #2c3e50;
+            text-align: center;
+        }
+
+        h2 {
+            color: #34495e;
+            border-bottom: 2px solid #3498db;
+            padding-bottom: 5px;
+        }
+
+        .section {
+            background: white;
+            padding: 15px;
+            margin-bottom: 20px;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        table {
+            border-collapse: collapse;
+            margin: 10px auto;
+            background: #fff;
+        }
+
+        th,
+        td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: center;
+            font-family: monospace;
+        }
+
+        th {
+            background-color: #ecf0f1;
+        }
+
+        .mapping,
+        .list-item {
+            font-family: monospace;
+            margin: 5px 0;
+        }
+
+        svg {
+            max-width: 100%;
+            height: auto;
+            display: block;
+            margin: 10px auto;
+        }
+
+        pre {
+            background: #f4f4f4;
+            padding: 10px;
+            border-radius: 3px;
+            overflow-x: auto;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Kameda-Weiner Minimization For Given NFA</h1>
+    <div id="content"></div>
+
+    <script>
+        function urlSafeBase64Decode(str) {
+            str = str.replace(/-/g, '+').replace(/_/g, '/');
+            return atob(str);
+        }
+
+        function formatSet(set) {
+            return set && set.length ? `{${set.join(', ')}}` : 'φ';
+        }
+
+        function renderStatesMap(sm) {
+            let table = '<table><tr><th></th>';
+            sm.cols.forEach(col => table += `<th>${formatSet(col)}</th>`);
+            table += '</tr>';
+            sm.rows.forEach((row, i) => {
+                table += `<tr><th>${formatSet(row)}</th>`;
+                sm.matrix[i].forEach(cell => table += `<td>${cell ? formatSet(cell) : 'φ'}</td>`);
+                table += '</tr>';
+            });
+            table += '</table>';
+            return table;
+        }
+
+        async function fetchFromPasteRs(key) {
+            const url = `https://paste.rs/${key}`;
+            const res = await fetch(url);
+            if (!res.ok) {
+                throw new Error(`Fetch error: ${res.status} ${res.statusText}`);
+            }
+            return res.text();
+        }
+
+        function renderSteps(data) {
+            const content = document.getElementById('content');
+            const viz = new Viz();
+
+            let html = '';
+
+            // Original NFA
+            if (data['Original NFA']) {
+                html += '<div class="section"><h2>Input NFA for Some Language L</h2>';
+                html += `<pre>${data['Original NFA'].states.join(', ')}</pre>`;
+                html += '<div id="og_nfa"></div></div>';
+                viz.renderSVGElement(data['Original NFA'].dot)
+                    .then(el => document.getElementById('og_nfa').appendChild(el));
+            }
+
+            // DFA for L
+            if (data['DFA']) {
+                html += '<div class="section"><h2>DFA for L</h2>';
+                html += '<div id="dfa"></div>';
+                html += `<p class="mapping">Mapping: ${Object.entries(data['DFA'].mapping)
+                    .map(([k, v]) => `${k}: ${formatSet(v)}`).join(', ')}</p></div>`;
+                viz.renderSVGElement(data['DFA'].dfa.dot)
+                    .then(el => document.getElementById('dfa').appendChild(el));
+            }
+
+            // Original NFA
+            if (data['Reverse NFA']) {
+                html += '<div class="section"><h2>NFA rev(L)</h2>';
+                html += `<pre>${data['Reverse NFA'].states.join(', ')}</pre>`;
+                html += '<div id="rev_nfa"></div></div>';
+                viz.renderSVGElement(data['Original NFA'].dot)
+                    .then(el => document.getElementById('rev_nfa').appendChild(el));
+            }
+
+            // Dual DFA for rev(L)
+            if (data['Dual of DFA']) {
+                html += '<div class="section"><h2>DFA for rev(L)</h2>';
+                html += '<div id="dual_dfa"></div>';
+                html += `<p class="mapping">Mapping: ${Object.entries(data['Dual of DFA'].mapping)
+                    .map(([k, v]) => `${k}: ${formatSet(v)}`).join(', ')}</p></div>`;
+                viz.renderSVGElement(data['Dual of DFA'].dfa.dot)
+                    .then(el => document.getElementById('dual_dfa').appendChild(el));
+            }
+
+            // States Map Reduction
+            if (data['States Map Reduction']) {
+                html += '<div class="section"><h2>Reducing States Map Matrix</h2>';
+                data['States Map Reduction'].forEach((sm, i) => {
+                    html += `<h3>Step ${i + 1}</h3>${renderStatesMap(sm)}`;
+                });
+                html += '<p>Successfully reduced the States Map matrix. The last table is the RSM.</p></div>';
+            }
+
+            // Maximal Prime Grids
+            if (data['Maximal Prime Grids']) {
+                html += '<div class="section"><h2>Finding Maximal Prime Grids</h2><p>Found Maximal Grids:</p>';
+                data['Maximal Prime Grids'].forEach(([rows, cols]) => {
+                    html += `<p class="list-item">Rows: ${formatSet(rows)}<br>Columns: ${formatSet(cols)}</p>`;
+                });
+                html += '</div>';
+            }
+
+            // Cover Enumeration and Intersection Rule Results
+            if (data['Cover Enumeration']) {
+                data['Cover Enumeration'].forEach((cover, i) => {
+                    html += '<div class="section">';
+                    html += `<h2>Minimal Cover ${i + 1} (Size: ${cover.length})</h2>`;
+                    html += '<p>Found a minimal cover:</p>';
+                    cover.forEach(([rows, cols]) => {
+                        html += `<p class="list-item">Rows: ${formatSet(rows)}, Columns: ${formatSet(cols)}</p>`;
+                    });
+                    html += '<p>Applying Intersection Rule</p>';
+                    if (data['Intersection Rule Result'] && data['Intersection Rule Result'][i]) {
+                        const nfa = data['Intersection Rule Result'][i];
+                        const isLegit = data['Legitimacy'][i];
+                        html += `<h3>NFA from Intersection Rule</h3><div id="nfa_${i}"></div>`;
+                        html += `<p>This NFA is ${isLegit ? '' : 'not '}legitimate (i.e., recognizes the same language as the original NFA!)</p>`;
+                        viz.renderSVGElement(nfa.dot)
+                            .then(el => document.getElementById(`nfa_${i}`).appendChild(el));
+                    }
+                    html += '</div>';
+                });
+            }
+
+            content.innerHTML = html;
+        }
+
+
+        (async () => {
+            const content = document.getElementById('content');
+            const params = new URLSearchParams(window.location.search);
+            const key = params.get('data');
+
+            if (!key) {
+                content.innerHTML = '<p>No data provided in URL parameter "data".</p>';
+                return;
+            }
+
+            try {
+                const base64Data = await fetchFromPasteRs(key);
+
+                const jsonString = urlSafeBase64Decode(base64Data);
+                const data = JSON.parse(jsonString);
+
+                renderSteps(data);
+
+            } catch (err) {
+                console.error(err);
+                content.innerHTML = `<p>Error: ${err.message}</p>`;
+            }
+        })();
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,667 @@
+<!doctype html>
+<html class="no-js" lang="en" data-content_root="./">
+  <head><meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width,initial-scale=1"/>
+    <meta name="color-scheme" content="light dark"><meta name="viewport" content="width=device-width, initial-scale=1" />
+<link rel="index" title="Index" href="genindex.html" /><link rel="search" title="Search" href="search.html" /><link rel="next" title="src.custom_typing package" href="src.custom_typing.html" /><link rel="prev" title="Finite Automata Documentation" href="index.html" />
+
+    <!-- Generated with Sphinx 8.2.3 and Furo 2024.08.06 -->
+        <title>src.algo package - Finite Automata 1.0.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=8f2a1f02" />
+    <link rel="stylesheet" type="text/css" href="_static/styles/furo.css?v=354aac6f" />
+    <link rel="stylesheet" type="text/css" href="_static/styles/furo-extensions.css?v=302659d7" />
+    
+    
+
+
+<style>
+  body {
+    --color-code-background: #f8f8f8;
+  --color-code-foreground: black;
+  
+  }
+  @media not print {
+    body[data-theme="dark"] {
+      --color-code-background: #202020;
+  --color-code-foreground: #d0d0d0;
+  
+    }
+    @media (prefers-color-scheme: dark) {
+      body:not([data-theme="light"]) {
+        --color-code-background: #202020;
+  --color-code-foreground: #d0d0d0;
+  
+      }
+    }
+  }
+</style></head>
+  <body>
+    
+    <script>
+      document.body.dataset.theme = localStorage.getItem("theme") || "auto";
+    </script>
+    
+
+<svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
+  <symbol id="svg-toc" viewBox="0 0 24 24">
+    <title>Contents</title>
+    <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 1024 1024">
+      <path d="M408 442h480c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8H408c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8zm-8 204c0 4.4 3.6 8 8 8h480c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8H408c-4.4 0-8 3.6-8 8v56zm504-486H120c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8h784c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8zm0 632H120c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8h784c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8zM115.4 518.9L271.7 642c5.8 4.6 14.4.5 14.4-6.9V388.9c0-7.4-8.5-11.5-14.4-6.9L115.4 505.1a8.74 8.74 0 0 0 0 13.8z"/>
+    </svg>
+  </symbol>
+  <symbol id="svg-menu" viewBox="0 0 24 24">
+    <title>Menu</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather-menu">
+      <line x1="3" y1="12" x2="21" y2="12"></line>
+      <line x1="3" y1="6" x2="21" y2="6"></line>
+      <line x1="3" y1="18" x2="21" y2="18"></line>
+    </svg>
+  </symbol>
+  <symbol id="svg-arrow-right" viewBox="0 0 24 24">
+    <title>Expand</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather-chevron-right">
+      <polyline points="9 18 15 12 9 6"></polyline>
+    </svg>
+  </symbol>
+  <symbol id="svg-sun" viewBox="0 0 24 24">
+    <title>Light mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="feather-sun">
+      <circle cx="12" cy="12" r="5"></circle>
+      <line x1="12" y1="1" x2="12" y2="3"></line>
+      <line x1="12" y1="21" x2="12" y2="23"></line>
+      <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+      <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+      <line x1="1" y1="12" x2="3" y2="12"></line>
+      <line x1="21" y1="12" x2="23" y2="12"></line>
+      <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+      <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+    </svg>
+  </symbol>
+  <symbol id="svg-moon" viewBox="0 0 24 24">
+    <title>Dark mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-moon">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+      <path d="M12 3c.132 0 .263 0 .393 0a7.5 7.5 0 0 0 7.92 12.446a9 9 0 1 1 -8.313 -12.454z" />
+    </svg>
+  </symbol>
+  <symbol id="svg-sun-with-moon" viewBox="0 0 24 24">
+    <title>Auto light/dark, in light mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round"
+      class="icon-custom-derived-from-feather-sun-and-tabler-moon">
+      <path style="opacity: 50%" d="M 5.411 14.504 C 5.471 14.504 5.532 14.504 5.591 14.504 C 3.639 16.319 4.383 19.569 6.931 20.352 C 7.693 20.586 8.512 20.551 9.25 20.252 C 8.023 23.207 4.056 23.725 2.11 21.184 C 0.166 18.642 1.702 14.949 4.874 14.536 C 5.051 14.512 5.231 14.5 5.411 14.5 L 5.411 14.504 Z"/>
+      <line x1="14.5" y1="3.25" x2="14.5" y2="1.25"/>
+      <line x1="14.5" y1="15.85" x2="14.5" y2="17.85"/>
+      <line x1="10.044" y1="5.094" x2="8.63" y2="3.68"/>
+      <line x1="19" y1="14.05" x2="20.414" y2="15.464"/>
+      <line x1="8.2" y1="9.55" x2="6.2" y2="9.55"/>
+      <line x1="20.8" y1="9.55" x2="22.8" y2="9.55"/>
+      <line x1="10.044" y1="14.006" x2="8.63" y2="15.42"/>
+      <line x1="19" y1="5.05" x2="20.414" y2="3.636"/>
+      <circle cx="14.5" cy="9.55" r="3.6"/>
+    </svg>
+  </symbol>
+  <symbol id="svg-moon-with-sun" viewBox="0 0 24 24">
+    <title>Auto light/dark, in dark mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round"
+      class="icon-custom-derived-from-feather-sun-and-tabler-moon">
+      <path d="M 8.282 7.007 C 8.385 7.007 8.494 7.007 8.595 7.007 C 5.18 10.184 6.481 15.869 10.942 17.24 C 12.275 17.648 13.706 17.589 15 17.066 C 12.851 22.236 5.91 23.143 2.505 18.696 C -0.897 14.249 1.791 7.786 7.342 7.063 C 7.652 7.021 7.965 7 8.282 7 L 8.282 7.007 Z"/>
+      <line style="opacity: 50%" x1="18" y1="3.705" x2="18" y2="2.5"/>
+      <line style="opacity: 50%" x1="18" y1="11.295" x2="18" y2="12.5"/>
+      <line style="opacity: 50%" x1="15.316" y1="4.816" x2="14.464" y2="3.964"/>
+      <line style="opacity: 50%" x1="20.711" y1="10.212" x2="21.563" y2="11.063"/>
+      <line style="opacity: 50%" x1="14.205" y1="7.5" x2="13.001" y2="7.5"/>
+      <line style="opacity: 50%" x1="21.795" y1="7.5" x2="23" y2="7.5"/>
+      <line style="opacity: 50%" x1="15.316" y1="10.184" x2="14.464" y2="11.036"/>
+      <line style="opacity: 50%" x1="20.711" y1="4.789" x2="21.563" y2="3.937"/>
+      <circle style="opacity: 50%" cx="18" cy="7.5" r="2.169"/>
+    </svg>
+  </symbol>
+  <symbol id="svg-pencil" viewBox="0 0 24 24">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-pencil-code">
+      <path d="M4 20h4l10.5 -10.5a2.828 2.828 0 1 0 -4 -4l-10.5 10.5v4" />
+      <path d="M13.5 6.5l4 4" />
+      <path d="M20 21l2 -2l-2 -2" />
+      <path d="M17 17l-2 2l2 2" />
+    </svg>
+  </symbol>
+  <symbol id="svg-eye" viewBox="0 0 24 24">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-eye-code">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+      <path d="M10 12a2 2 0 1 0 4 0a2 2 0 0 0 -4 0" />
+      <path
+        d="M11.11 17.958c-3.209 -.307 -5.91 -2.293 -8.11 -5.958c2.4 -4 5.4 -6 9 -6c3.6 0 6.6 2 9 6c-.21 .352 -.427 .688 -.647 1.008" />
+      <path d="M20 21l2 -2l-2 -2" />
+      <path d="M17 17l-2 2l2 2" />
+    </svg>
+  </symbol>
+</svg>
+
+<input type="checkbox" class="sidebar-toggle" name="__navigation" id="__navigation">
+<input type="checkbox" class="sidebar-toggle" name="__toc" id="__toc">
+<label class="overlay sidebar-overlay" for="__navigation">
+  <div class="visually-hidden">Hide navigation sidebar</div>
+</label>
+<label class="overlay toc-overlay" for="__toc">
+  <div class="visually-hidden">Hide table of contents sidebar</div>
+</label>
+
+<a class="skip-to-content muted-link" href="#furo-main-content">Skip to content</a>
+
+
+
+<div class="page">
+  <header class="mobile-header">
+    <div class="header-left">
+      <label class="nav-overlay-icon" for="__navigation">
+        <div class="visually-hidden">Toggle site navigation sidebar</div>
+        <i class="icon"><svg><use href="#svg-menu"></use></svg></i>
+      </label>
+    </div>
+    <div class="header-center">
+      <a href="index.html"><div class="brand">Finite Automata 1.0.0 documentation</div></a>
+    </div>
+    <div class="header-right">
+      <div class="theme-toggle-container theme-toggle-header">
+        <button class="theme-toggle">
+          <div class="visually-hidden">Toggle Light / Dark / Auto color theme</div>
+          <svg class="theme-icon-when-auto-light"><use href="#svg-sun-with-moon"></use></svg>
+          <svg class="theme-icon-when-auto-dark"><use href="#svg-moon-with-sun"></use></svg>
+          <svg class="theme-icon-when-dark"><use href="#svg-moon"></use></svg>
+          <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
+        </button>
+      </div>
+      <label class="toc-overlay-icon toc-header-icon" for="__toc">
+        <div class="visually-hidden">Toggle table of contents sidebar</div>
+        <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
+      </label>
+    </div>
+  </header>
+  <aside class="sidebar-drawer">
+    <div class="sidebar-container">
+      
+      <div class="sidebar-sticky"><a class="sidebar-brand" href="index.html">
+  
+  
+  <span class="sidebar-brand-text">Finite Automata 1.0.0 documentation</span>
+  
+</a><form class="sidebar-search-container" method="get" action="search.html" role="search">
+  <input class="sidebar-search" placeholder="Search" name="q" aria-label="Search">
+  <input type="hidden" name="check_keywords" value="yes">
+  <input type="hidden" name="area" value="default">
+</form>
+<div id="searchbox"></div><div class="sidebar-scroll"><div class="sidebar-tree">
+  <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1 current current-page"><a class="current reference internal" href="#">src.algo package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="src.custom_typing.html">src.custom_typing package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="src.fa.html">src.fa package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="src.utils.html">src.utils package</a></li>
+</ul>
+
+</div>
+</div>
+
+      </div>
+      
+    </div>
+  </aside>
+  <div class="main">
+    <div class="content">
+      <div class="article-container">
+        <a href="#" class="back-to-top muted-link">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+            <path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8v12z"></path>
+          </svg>
+          <span>Back to top</span>
+        </a>
+        <div class="content-icon-container">
+          <div class="view-this-page">
+  <a class="muted-link" href="_sources/src.algo.rst.txt" title="View this page">
+    <svg><use href="#svg-eye"></use></svg>
+    <span class="visually-hidden">View this page</span>
+  </a>
+</div>
+<div class="theme-toggle-container theme-toggle-content">
+            <button class="theme-toggle">
+              <div class="visually-hidden">Toggle Light / Dark / Auto color theme</div>
+              <svg class="theme-icon-when-auto-light"><use href="#svg-sun-with-moon"></use></svg>
+              <svg class="theme-icon-when-auto-dark"><use href="#svg-moon-with-sun"></use></svg>
+              <svg class="theme-icon-when-dark"><use href="#svg-moon"></use></svg>
+              <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
+            </button>
+          </div>
+          <label class="toc-overlay-icon toc-content-icon" for="__toc">
+            <div class="visually-hidden">Toggle table of contents sidebar</div>
+            <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
+          </label>
+        </div>
+        <article role="main" id="furo-main-content">
+          <section id="src-algo-package">
+<h1>src.algo package<a class="headerlink" href="#src-algo-package" title="Link to this heading">¶</a></h1>
+<section id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Link to this heading">¶</a></h2>
+</section>
+<section id="module-src.algo.atomicity">
+<span id="src-algo-atomicity-module"></span><h2>src.algo.atomicity module<a class="headerlink" href="#module-src.algo.atomicity" title="Link to this heading">¶</a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="src.algo.atomicity.check_atomicity">
+<span class="sig-prename descclassname"><span class="pre">src.algo.atomicity.</span></span><span class="sig-name descname"><span class="pre">check_atomicity</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">nfa</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/algo/atomicity.html#check_atomicity"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.algo.atomicity.check_atomicity" title="Link to this definition">¶</a></dt>
+<dd><p>Check whether the given NFA is atomic.</p>
+<p>An NFA is atomic if its reversal, determinized, and minimized form has the same number
+of states before and after minimization. This property indicates that the NFA’s reverse-
+deterministic structure is already minimal.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>nfa</strong> (<a class="reference internal" href="src.fa.html#src.fa.nfa.NFA" title="src.fa.nfa.NFA"><em>NFA</em></a>) – The nondeterministic finite automaton to check for atomicity.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>True if the NFA is atomic, False otherwise.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>bool</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="src.algo.atomicity.make_atomic_by_reverse_min">
+<span class="sig-prename descclassname"><span class="pre">src.algo.atomicity.</span></span><span class="sig-name descname"><span class="pre">make_atomic_by_reverse_min</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">nfa</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/algo/atomicity.html#make_atomic_by_reverse_min"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.algo.atomicity.make_atomic_by_reverse_min" title="Link to this definition">¶</a></dt>
+<dd><p>Create an atomic NFA by reversing and minimizing.</p>
+<p>This function determinizes and minimizes the input NFA to a DFA, then reverses that DFA
+to obtain an NFA that is guaranteed to be atomic.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>nfa</strong> (<a class="reference internal" href="src.fa.html#src.fa.nfa.NFA" title="src.fa.nfa.NFA"><em>NFA</em></a>) – The original nondeterministic finite automaton.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>An atomic NFA obtained by reverse-minimization of the original NFA.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="src.fa.html#src.fa.nfa.NFA" title="src.fa.nfa.NFA">NFA</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="src.algo.atomicity.make_nonminimal">
+<span class="sig-prename descclassname"><span class="pre">src.algo.atomicity.</span></span><span class="sig-name descname"><span class="pre">make_nonminimal</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">nfa</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/algo/atomicity.html#make_nonminimal"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.algo.atomicity.make_nonminimal" title="Link to this definition">¶</a></dt>
+<dd><p>Construct a new NFA which recognizes the same language as input NFA
+but this new NFA’s subset construction yields a DFA which is ensured
+to be non-minimal by cloning each state.</p>
+<p>This function takes the input NFA and creates a new one with two copies of each original state:
+one with its original name and one with a “’” suffix. Transitions are updated so that every
+transition from a state p to q in the original NFA is mirrored to both q and q’ in the new NFA.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>nfa</strong> (<a class="reference internal" href="src.fa.html#src.fa.nfa.NFA" title="src.fa.nfa.NFA"><em>NFA</em></a>) – The source NFA to clone into a non-minimal NFA.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><dl class="simple">
+<dt>A new nondeterministic finite automaton with duplicated states and transitions,</dt><dd><p>ensuring it’s DFA (from subset construction) is non-minimal.</p>
+</dd>
+</dl>
+</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="src.fa.html#src.fa.nfa.NFA" title="src.fa.nfa.NFA">NFA</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+<section id="module-src.algo.kamedaweiner">
+<span id="src-algo-kamedaweiner-module"></span><h2>src.algo.kamedaweiner module<a class="headerlink" href="#module-src.algo.kamedaweiner" title="Link to this heading">¶</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="src.algo.kamedaweiner.KamedaWeinerMinimize">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">src.algo.kamedaweiner.</span></span><span class="sig-name descname"><span class="pre">KamedaWeinerMinimize</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">nfa</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">store_progress</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/algo/kamedaweiner.html#KamedaWeinerMinimize"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.algo.kamedaweiner.KamedaWeinerMinimize" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="src.fa.html#src.fa.nfa.NFA" title="src.fa.nfa.NFA"><code class="xref py py-class docutils literal notranslate"><span class="pre">NFA</span></code></a></p>
+<p>State minimization of an NFA using the Kameda-Weiner algorithm.</p>
+<p>Extends NFA to perform the Kameda-Weiner synthesis procedure, which
+finds a minimum-state NFA equivalent to the given NFA by analyzing
+the reduced automaton matrix (RAM), identifying prime grids, and
+applying the intersection rule over minimal covers.</p>
+<p>Inherits all standard NFA functionality and adds methods specific
+to the Kameda-Weiner minimization steps.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="src.algo.kamedaweiner.KamedaWeinerMinimize.apply_intersection_rule">
+<span class="sig-name descname"><span class="pre">apply_intersection_rule</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dfa</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rsm</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cover</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/algo/kamedaweiner.html#KamedaWeinerMinimize.apply_intersection_rule"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.algo.kamedaweiner.KamedaWeinerMinimize.apply_intersection_rule" title="Link to this definition">¶</a></dt>
+<dd><p>Synthesize an NFA from a chosen cover via the intersection rule.</p>
+<p>Constructs a new NFA whose states correspond to the grids in the cover,
+using the DFA transition structure to determine transitions by
+intersecting preimages.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>dfa</strong> (<a class="reference internal" href="src.fa.html#src.fa.dfa.DFA" title="src.fa.dfa.DFA"><em>DFA</em></a>) – The forward-subset DFA of the original NFA.</p></li>
+<li><p><strong>rsm</strong> (<a class="reference internal" href="src.custom_typing.html#src.custom_typing.custom_types.StatesMap" title="src.custom_typing.custom_types.StatesMap"><em>StatesMap</em></a>) – The reduced states map.</p></li>
+<li><p><strong>cover</strong> (<em>List</em><em>[</em><em>Tuple</em><em>[</em><em>FrozenSet</em><em>[</em><em>int</em><em>]</em><em>, </em><em>FrozenSet</em><em>[</em><em>int</em><em>]</em><em>]</em><em>]</em>) – The selected minimal cover of prime grids.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A synthesized NFA corresponding to this cover.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="src.fa.html#src.fa.nfa.NFA" title="src.fa.nfa.NFA">NFA</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.algo.kamedaweiner.KamedaWeinerMinimize.construct_states_map">
+<span class="sig-name descname"><span class="pre">construct_states_map</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dfa_map</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dfa_dual_map</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/algo/kamedaweiner.html#KamedaWeinerMinimize.construct_states_map"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.algo.kamedaweiner.KamedaWeinerMinimize.construct_states_map" title="Link to this definition">¶</a></dt>
+<dd><p>Build the initial states map (SM) matrix from DFA and dual DFA.</p>
+<p>Given the forward subset-construction mapping of the NFA to a DFA
+and the dual DFA mapping, construct a StatesMap that partitions
+NFA states into rows and columns and records their intersections.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>dfa_map</strong> (<em>Dict</em><em>[</em><em>int</em><em>, </em><em>FrozenSet</em><em>[</em><em>STATE</em><em>]</em><em>]</em>) – Mapping from DFA state ID to its corresponding NFA-state subset.</p></li>
+<li><p><strong>dfa_dual_map</strong> (<em>Dict</em><em>[</em><em>int</em><em>, </em><em>FrozenSet</em><em>[</em><em>STATE</em><em>]</em><em>]</em>) – Mapping from dual-DFA state ID to its corresponding NFA-state subset.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><dl class="simple">
+<dt>A dict containing:</dt><dd><ul class="simple">
+<li><p><cite>rows</cite>: list of singleton frozensets for each DFA state</p></li>
+<li><p><cite>cols</cite>: list of singleton frozensets for each dual DFA state</p></li>
+<li><p><cite>matrix</cite>: 2D list where each cell is the intersection (FrozenSet) of the corresponding row and column, or None if empty</p></li>
+</ul>
+</dd>
+</dl>
+</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="src.custom_typing.html#src.custom_typing.custom_types.StatesMap" title="src.custom_typing.custom_types.StatesMap">StatesMap</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.algo.kamedaweiner.KamedaWeinerMinimize.find_all_minimal_covers">
+<span class="sig-name descname"><span class="pre">find_all_minimal_covers</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sm</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">prime_grids</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/algo/kamedaweiner.html#KamedaWeinerMinimize.find_all_minimal_covers"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.algo.kamedaweiner.KamedaWeinerMinimize.find_all_minimal_covers" title="Link to this definition">¶</a></dt>
+<dd><p>Generate all covers of minimal size from the prime grids.</p>
+<p>Yields each distinct minimal cover (list of grids) in increasing
+order of grid count.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>sm</strong> (<a class="reference internal" href="src.custom_typing.html#src.custom_typing.custom_types.StatesMap" title="src.custom_typing.custom_types.StatesMap"><em>StatesMap</em></a>) – The reduced states map.</p></li>
+<li><p><strong>prime_grids</strong> (<em>List</em><em>[</em><em>Tuple</em><em>[</em><em>FrozenSet</em><em>[</em><em>int</em><em>]</em><em>, </em><em>FrozenSet</em><em>[</em><em>int</em><em>]</em><em>]</em><em>]</em>) – Candidate prime grids.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Yields<span class="colon">:</span></dt>
+<dd class="field-even"><p><em>Iterator[List[Tuple[FrozenSet[int], FrozenSet[int]]]]</em> –     Each minimal cover as a list of grid coordinate pairs.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.algo.kamedaweiner.KamedaWeinerMinimize.find_maximal_prime_grids">
+<span class="sig-name descname"><span class="pre">find_maximal_prime_grids</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sm</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/algo/kamedaweiner.html#KamedaWeinerMinimize.find_maximal_prime_grids"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.algo.kamedaweiner.KamedaWeinerMinimize.find_maximal_prime_grids" title="Link to this definition">¶</a></dt>
+<dd><p>Enumerate all maximal prime grids in the reduced states map.</p>
+<p>Explores subgrids by breadth-first reduction of rows or columns
+containing None entries, and collects those grids that are prime
+and not strictly contained in any other prime grid.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>sm</strong> (<a class="reference internal" href="src.custom_typing.html#src.custom_typing.custom_types.StatesMap" title="src.custom_typing.custom_types.StatesMap"><em>StatesMap</em></a>) – The reduced states map.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>List of pairs (rows, cols) each defining a maximal prime grid.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>List[Tuple[FrozenSet[int], FrozenSet[int]]]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.algo.kamedaweiner.KamedaWeinerMinimize.is_cover">
+<span class="sig-name descname"><span class="pre">is_cover</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sm</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">grids</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/algo/kamedaweiner.html#KamedaWeinerMinimize.is_cover"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.algo.kamedaweiner.KamedaWeinerMinimize.is_cover" title="Link to this definition">¶</a></dt>
+<dd><p>Determine if a set of grids covers all 1-entries in the RAM.</p>
+<p>A cover is valid if every nonempty cell in the states map matrix
+lies within at least one of the supplied grids.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>sm</strong> (<a class="reference internal" href="src.custom_typing.html#src.custom_typing.custom_types.StatesMap" title="src.custom_typing.custom_types.StatesMap"><em>StatesMap</em></a>) – The reduced states map.</p></li>
+<li><p><strong>grids</strong> (<em>Tuple</em><em>[</em><em>Tuple</em><em>[</em><em>FrozenSet</em><em>[</em><em>int</em><em>]</em><em>, </em><em>FrozenSet</em><em>[</em><em>int</em><em>]</em><em>]</em><em>, </em><em>...</em><em>]</em>) – Sequence of grids to test as a cover.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>True if the grids form a complete cover, False otherwise.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>bool</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.algo.kamedaweiner.KamedaWeinerMinimize.is_grid_prime">
+<span class="sig-name descname"><span class="pre">is_grid_prime</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sm</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">grid_rows</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">grid_cols</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/algo/kamedaweiner.html#KamedaWeinerMinimize.is_grid_prime"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.algo.kamedaweiner.KamedaWeinerMinimize.is_grid_prime" title="Link to this definition">¶</a></dt>
+<dd><p>Check whether a given grid is prime (cannot be extended).</p>
+<p>A grid is prime if all intersections between the specified row set
+and column set in the states map are non-None, and it is not strictly
+contained in any larger grid.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>sm</strong> (<a class="reference internal" href="src.custom_typing.html#src.custom_typing.custom_types.StatesMap" title="src.custom_typing.custom_types.StatesMap"><em>StatesMap</em></a>) – The reduced states map.</p></li>
+<li><p><strong>grid_rows</strong> (<em>FrozenSet</em><em>[</em><em>int</em><em>]</em>) – The set of row indices defining the grid.</p></li>
+<li><p><strong>grid_cols</strong> (<em>FrozenSet</em><em>[</em><em>int</em><em>]</em>) – The set of column indices defining the grid.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>True if the grid is prime, False otherwise.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>bool</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.algo.kamedaweiner.KamedaWeinerMinimize.merge_cols">
+<span class="sig-name descname"><span class="pre">merge_cols</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sm</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">indices_to_merge</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/algo/kamedaweiner.html#KamedaWeinerMinimize.merge_cols"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.algo.kamedaweiner.KamedaWeinerMinimize.merge_cols" title="Link to this definition">¶</a></dt>
+<dd><p>Merge a set of columns in the states map into a single column.</p>
+<p>Combines the specified column indices by unioning their column-blocks
+and merging their matrix entries component-wise.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>sm</strong> (<a class="reference internal" href="src.custom_typing.html#src.custom_typing.custom_types.StatesMap" title="src.custom_typing.custom_types.StatesMap"><em>StatesMap</em></a>) – The current states map.</p></li>
+<li><p><strong>indices_to_merge</strong> (<em>List</em><em>[</em><em>int</em><em>]</em>) – List of column indices that should be merged.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A new states map with those columns merged.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="src.custom_typing.html#src.custom_typing.custom_types.StatesMap" title="src.custom_typing.custom_types.StatesMap">StatesMap</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.algo.kamedaweiner.KamedaWeinerMinimize.merge_rows">
+<span class="sig-name descname"><span class="pre">merge_rows</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sm</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">indices_to_merge</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/algo/kamedaweiner.html#KamedaWeinerMinimize.merge_rows"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.algo.kamedaweiner.KamedaWeinerMinimize.merge_rows" title="Link to this definition">¶</a></dt>
+<dd><p>Merge a set of rows in the states map into a single row.</p>
+<p>Combines the specified row indices by unioning their row-blocks
+and merging their matrix entries component-wise.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>sm</strong> (<a class="reference internal" href="src.custom_typing.html#src.custom_typing.custom_types.StatesMap" title="src.custom_typing.custom_types.StatesMap"><em>StatesMap</em></a>) – The current states map.</p></li>
+<li><p><strong>indices_to_merge</strong> (<em>List</em><em>[</em><em>int</em><em>]</em>) – List of row indices that should be merged.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A new states map with those rows merged.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="src.custom_typing.html#src.custom_typing.custom_types.StatesMap" title="src.custom_typing.custom_types.StatesMap">StatesMap</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.algo.kamedaweiner.KamedaWeinerMinimize.reduce_states_map">
+<span class="sig-name descname"><span class="pre">reduce_states_map</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">states_map</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/algo/kamedaweiner.html#KamedaWeinerMinimize.reduce_states_map"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.algo.kamedaweiner.KamedaWeinerMinimize.reduce_states_map" title="Link to this definition">¶</a></dt>
+<dd><p>Compute the reduced states map (RSM) by merging equivalent rows/columns.</p>
+<p>Iteratively merges rows with identical patterns of nonempty entries,
+then columns likewise, until no further merges are possible.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>states_map</strong> (<a class="reference internal" href="src.custom_typing.html#src.custom_typing.custom_types.StatesMap" title="src.custom_typing.custom_types.StatesMap"><em>StatesMap</em></a>) – The initial or current states map to reduce.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The reduced map with merged rows/columns.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="src.custom_typing.html#src.custom_typing.custom_types.StatesMap" title="src.custom_typing.custom_types.StatesMap">StatesMap</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.algo.kamedaweiner.KamedaWeinerMinimize.run">
+<span class="sig-name descname"><span class="pre">run</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">get_all_nfas</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/algo/kamedaweiner.html#KamedaWeinerMinimize.run"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.algo.kamedaweiner.KamedaWeinerMinimize.run" title="Link to this definition">¶</a></dt>
+<dd><p>Execute the full Kameda-Weiner minimization procedure.</p>
+<ol class="arabic simple">
+<li><p>Convert the NFA to a DFA and its dual.</p></li>
+<li><p>Build and reduce the states map.</p></li>
+<li><p>Find prime grids and enumerate minimal covers.</p></li>
+<li><p>Apply the intersection rule to each cover until a
+legitimate (language-preserving) NFA is found.</p></li>
+</ol>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>get_all_nfas</strong> (<em>bool</em><em>, </em><em>optional</em>) – If True, return all candidate NFAs in non decreasing order
+of number of states with a flag indicating equivalence to
+the original. If False, return the first valid minimized
+NFA found.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The minimized NFA, or a list of (NFA, is_equivalent) pairs.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="src.fa.html#src.fa.nfa.NFA" title="src.fa.nfa.NFA">NFA</a> or List[Tuple[<a class="reference internal" href="src.fa.html#src.fa.nfa.NFA" title="src.fa.nfa.NFA">NFA</a>, bool]]</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-src.algo">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-src.algo" title="Link to this heading">¶</a></h2>
+</section>
+</section>
+
+        </article>
+      </div>
+      <footer>
+        
+        <div class="related-pages">
+          <a class="next-page" href="src.custom_typing.html">
+              <div class="page-info">
+                <div class="context">
+                  <span>Next</span>
+                </div>
+                <div class="title">src.custom_typing package</div>
+              </div>
+              <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
+            </a>
+          <a class="prev-page" href="index.html">
+              <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
+              <div class="page-info">
+                <div class="context">
+                  <span>Previous</span>
+                </div>
+                
+                <div class="title">Home</div>
+                
+              </div>
+            </a>
+        </div>
+        <div class="bottom-of-page">
+          <div class="left-details">
+            <div class="copyright">
+                Copyright &#169; 2025, Jaskirat Singh Maskeen
+            </div>
+            Made with <a href="https://www.sphinx-doc.org/">Sphinx</a> and <a class="muted-link" href="https://pradyunsg.me">@pradyunsg</a>'s
+            
+            <a href="https://github.com/pradyunsg/furo">Furo</a>
+            
+          </div>
+          <div class="right-details">
+            
+          </div>
+        </div>
+        
+      </footer>
+    </div>
+    <aside class="toc-drawer">
+      
+      
+      <div class="toc-sticky toc-scroll">
+        <div class="toc-title-container">
+          <span class="toc-title">
+            On this page
+          </span>
+        </div>
+        <div class="toc-tree-container">
+          <div class="toc-tree">
+            <ul>
+<li><a class="reference internal" href="#">src.algo package</a><ul>
+<li><a class="reference internal" href="#submodules">Submodules</a></li>
+<li><a class="reference internal" href="#module-src.algo.atomicity">src.algo.atomicity module</a><ul>
+<li><a class="reference internal" href="#src.algo.atomicity.check_atomicity"><code class="docutils literal notranslate"><span class="pre">check_atomicity()</span></code></a></li>
+<li><a class="reference internal" href="#src.algo.atomicity.make_atomic_by_reverse_min"><code class="docutils literal notranslate"><span class="pre">make_atomic_by_reverse_min()</span></code></a></li>
+<li><a class="reference internal" href="#src.algo.atomicity.make_nonminimal"><code class="docutils literal notranslate"><span class="pre">make_nonminimal()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#module-src.algo.kamedaweiner">src.algo.kamedaweiner module</a><ul>
+<li><a class="reference internal" href="#src.algo.kamedaweiner.KamedaWeinerMinimize"><code class="docutils literal notranslate"><span class="pre">KamedaWeinerMinimize</span></code></a><ul>
+<li><a class="reference internal" href="#src.algo.kamedaweiner.KamedaWeinerMinimize.apply_intersection_rule"><code class="docutils literal notranslate"><span class="pre">KamedaWeinerMinimize.apply_intersection_rule()</span></code></a></li>
+<li><a class="reference internal" href="#src.algo.kamedaweiner.KamedaWeinerMinimize.construct_states_map"><code class="docutils literal notranslate"><span class="pre">KamedaWeinerMinimize.construct_states_map()</span></code></a></li>
+<li><a class="reference internal" href="#src.algo.kamedaweiner.KamedaWeinerMinimize.find_all_minimal_covers"><code class="docutils literal notranslate"><span class="pre">KamedaWeinerMinimize.find_all_minimal_covers()</span></code></a></li>
+<li><a class="reference internal" href="#src.algo.kamedaweiner.KamedaWeinerMinimize.find_maximal_prime_grids"><code class="docutils literal notranslate"><span class="pre">KamedaWeinerMinimize.find_maximal_prime_grids()</span></code></a></li>
+<li><a class="reference internal" href="#src.algo.kamedaweiner.KamedaWeinerMinimize.is_cover"><code class="docutils literal notranslate"><span class="pre">KamedaWeinerMinimize.is_cover()</span></code></a></li>
+<li><a class="reference internal" href="#src.algo.kamedaweiner.KamedaWeinerMinimize.is_grid_prime"><code class="docutils literal notranslate"><span class="pre">KamedaWeinerMinimize.is_grid_prime()</span></code></a></li>
+<li><a class="reference internal" href="#src.algo.kamedaweiner.KamedaWeinerMinimize.merge_cols"><code class="docutils literal notranslate"><span class="pre">KamedaWeinerMinimize.merge_cols()</span></code></a></li>
+<li><a class="reference internal" href="#src.algo.kamedaweiner.KamedaWeinerMinimize.merge_rows"><code class="docutils literal notranslate"><span class="pre">KamedaWeinerMinimize.merge_rows()</span></code></a></li>
+<li><a class="reference internal" href="#src.algo.kamedaweiner.KamedaWeinerMinimize.reduce_states_map"><code class="docutils literal notranslate"><span class="pre">KamedaWeinerMinimize.reduce_states_map()</span></code></a></li>
+<li><a class="reference internal" href="#src.algo.kamedaweiner.KamedaWeinerMinimize.run"><code class="docutils literal notranslate"><span class="pre">KamedaWeinerMinimize.run()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a class="reference internal" href="#module-src.algo">Module contents</a></li>
+</ul>
+</li>
+</ul>
+
+          </div>
+        </div>
+      </div>
+      
+      
+    </aside>
+  </div>
+</div><script src="_static/documentation_options.js?v=8d563738"></script>
+    <script src="_static/doctools.js?v=9bcbadda"></script>
+    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/scripts/furo.js?v=5fa4622c"></script>
+    </body>
+</html>

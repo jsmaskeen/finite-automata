@@ -1,0 +1,632 @@
+<!doctype html>
+<html class="no-js" lang="en" data-content_root="./">
+  <head><meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width,initial-scale=1"/>
+    <meta name="color-scheme" content="light dark"><meta name="viewport" content="width=device-width, initial-scale=1" />
+<link rel="index" title="Index" href="genindex.html" /><link rel="search" title="Search" href="search.html" /><link rel="next" title="src.utils package" href="src.utils.html" /><link rel="prev" title="src.custom_typing package" href="src.custom_typing.html" />
+
+    <!-- Generated with Sphinx 8.2.3 and Furo 2024.08.06 -->
+        <title>src.fa package - Finite Automata 1.0.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=8f2a1f02" />
+    <link rel="stylesheet" type="text/css" href="_static/styles/furo.css?v=354aac6f" />
+    <link rel="stylesheet" type="text/css" href="_static/styles/furo-extensions.css?v=302659d7" />
+    
+    
+
+
+<style>
+  body {
+    --color-code-background: #f8f8f8;
+  --color-code-foreground: black;
+  
+  }
+  @media not print {
+    body[data-theme="dark"] {
+      --color-code-background: #202020;
+  --color-code-foreground: #d0d0d0;
+  
+    }
+    @media (prefers-color-scheme: dark) {
+      body:not([data-theme="light"]) {
+        --color-code-background: #202020;
+  --color-code-foreground: #d0d0d0;
+  
+      }
+    }
+  }
+</style></head>
+  <body>
+    
+    <script>
+      document.body.dataset.theme = localStorage.getItem("theme") || "auto";
+    </script>
+    
+
+<svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
+  <symbol id="svg-toc" viewBox="0 0 24 24">
+    <title>Contents</title>
+    <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 1024 1024">
+      <path d="M408 442h480c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8H408c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8zm-8 204c0 4.4 3.6 8 8 8h480c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8H408c-4.4 0-8 3.6-8 8v56zm504-486H120c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8h784c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8zm0 632H120c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8h784c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8zM115.4 518.9L271.7 642c5.8 4.6 14.4.5 14.4-6.9V388.9c0-7.4-8.5-11.5-14.4-6.9L115.4 505.1a8.74 8.74 0 0 0 0 13.8z"/>
+    </svg>
+  </symbol>
+  <symbol id="svg-menu" viewBox="0 0 24 24">
+    <title>Menu</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather-menu">
+      <line x1="3" y1="12" x2="21" y2="12"></line>
+      <line x1="3" y1="6" x2="21" y2="6"></line>
+      <line x1="3" y1="18" x2="21" y2="18"></line>
+    </svg>
+  </symbol>
+  <symbol id="svg-arrow-right" viewBox="0 0 24 24">
+    <title>Expand</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather-chevron-right">
+      <polyline points="9 18 15 12 9 6"></polyline>
+    </svg>
+  </symbol>
+  <symbol id="svg-sun" viewBox="0 0 24 24">
+    <title>Light mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="feather-sun">
+      <circle cx="12" cy="12" r="5"></circle>
+      <line x1="12" y1="1" x2="12" y2="3"></line>
+      <line x1="12" y1="21" x2="12" y2="23"></line>
+      <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+      <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+      <line x1="1" y1="12" x2="3" y2="12"></line>
+      <line x1="21" y1="12" x2="23" y2="12"></line>
+      <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+      <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+    </svg>
+  </symbol>
+  <symbol id="svg-moon" viewBox="0 0 24 24">
+    <title>Dark mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-moon">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+      <path d="M12 3c.132 0 .263 0 .393 0a7.5 7.5 0 0 0 7.92 12.446a9 9 0 1 1 -8.313 -12.454z" />
+    </svg>
+  </symbol>
+  <symbol id="svg-sun-with-moon" viewBox="0 0 24 24">
+    <title>Auto light/dark, in light mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round"
+      class="icon-custom-derived-from-feather-sun-and-tabler-moon">
+      <path style="opacity: 50%" d="M 5.411 14.504 C 5.471 14.504 5.532 14.504 5.591 14.504 C 3.639 16.319 4.383 19.569 6.931 20.352 C 7.693 20.586 8.512 20.551 9.25 20.252 C 8.023 23.207 4.056 23.725 2.11 21.184 C 0.166 18.642 1.702 14.949 4.874 14.536 C 5.051 14.512 5.231 14.5 5.411 14.5 L 5.411 14.504 Z"/>
+      <line x1="14.5" y1="3.25" x2="14.5" y2="1.25"/>
+      <line x1="14.5" y1="15.85" x2="14.5" y2="17.85"/>
+      <line x1="10.044" y1="5.094" x2="8.63" y2="3.68"/>
+      <line x1="19" y1="14.05" x2="20.414" y2="15.464"/>
+      <line x1="8.2" y1="9.55" x2="6.2" y2="9.55"/>
+      <line x1="20.8" y1="9.55" x2="22.8" y2="9.55"/>
+      <line x1="10.044" y1="14.006" x2="8.63" y2="15.42"/>
+      <line x1="19" y1="5.05" x2="20.414" y2="3.636"/>
+      <circle cx="14.5" cy="9.55" r="3.6"/>
+    </svg>
+  </symbol>
+  <symbol id="svg-moon-with-sun" viewBox="0 0 24 24">
+    <title>Auto light/dark, in dark mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round"
+      class="icon-custom-derived-from-feather-sun-and-tabler-moon">
+      <path d="M 8.282 7.007 C 8.385 7.007 8.494 7.007 8.595 7.007 C 5.18 10.184 6.481 15.869 10.942 17.24 C 12.275 17.648 13.706 17.589 15 17.066 C 12.851 22.236 5.91 23.143 2.505 18.696 C -0.897 14.249 1.791 7.786 7.342 7.063 C 7.652 7.021 7.965 7 8.282 7 L 8.282 7.007 Z"/>
+      <line style="opacity: 50%" x1="18" y1="3.705" x2="18" y2="2.5"/>
+      <line style="opacity: 50%" x1="18" y1="11.295" x2="18" y2="12.5"/>
+      <line style="opacity: 50%" x1="15.316" y1="4.816" x2="14.464" y2="3.964"/>
+      <line style="opacity: 50%" x1="20.711" y1="10.212" x2="21.563" y2="11.063"/>
+      <line style="opacity: 50%" x1="14.205" y1="7.5" x2="13.001" y2="7.5"/>
+      <line style="opacity: 50%" x1="21.795" y1="7.5" x2="23" y2="7.5"/>
+      <line style="opacity: 50%" x1="15.316" y1="10.184" x2="14.464" y2="11.036"/>
+      <line style="opacity: 50%" x1="20.711" y1="4.789" x2="21.563" y2="3.937"/>
+      <circle style="opacity: 50%" cx="18" cy="7.5" r="2.169"/>
+    </svg>
+  </symbol>
+  <symbol id="svg-pencil" viewBox="0 0 24 24">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-pencil-code">
+      <path d="M4 20h4l10.5 -10.5a2.828 2.828 0 1 0 -4 -4l-10.5 10.5v4" />
+      <path d="M13.5 6.5l4 4" />
+      <path d="M20 21l2 -2l-2 -2" />
+      <path d="M17 17l-2 2l2 2" />
+    </svg>
+  </symbol>
+  <symbol id="svg-eye" viewBox="0 0 24 24">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-eye-code">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+      <path d="M10 12a2 2 0 1 0 4 0a2 2 0 0 0 -4 0" />
+      <path
+        d="M11.11 17.958c-3.209 -.307 -5.91 -2.293 -8.11 -5.958c2.4 -4 5.4 -6 9 -6c3.6 0 6.6 2 9 6c-.21 .352 -.427 .688 -.647 1.008" />
+      <path d="M20 21l2 -2l-2 -2" />
+      <path d="M17 17l-2 2l2 2" />
+    </svg>
+  </symbol>
+</svg>
+
+<input type="checkbox" class="sidebar-toggle" name="__navigation" id="__navigation">
+<input type="checkbox" class="sidebar-toggle" name="__toc" id="__toc">
+<label class="overlay sidebar-overlay" for="__navigation">
+  <div class="visually-hidden">Hide navigation sidebar</div>
+</label>
+<label class="overlay toc-overlay" for="__toc">
+  <div class="visually-hidden">Hide table of contents sidebar</div>
+</label>
+
+<a class="skip-to-content muted-link" href="#furo-main-content">Skip to content</a>
+
+
+
+<div class="page">
+  <header class="mobile-header">
+    <div class="header-left">
+      <label class="nav-overlay-icon" for="__navigation">
+        <div class="visually-hidden">Toggle site navigation sidebar</div>
+        <i class="icon"><svg><use href="#svg-menu"></use></svg></i>
+      </label>
+    </div>
+    <div class="header-center">
+      <a href="index.html"><div class="brand">Finite Automata 1.0.0 documentation</div></a>
+    </div>
+    <div class="header-right">
+      <div class="theme-toggle-container theme-toggle-header">
+        <button class="theme-toggle">
+          <div class="visually-hidden">Toggle Light / Dark / Auto color theme</div>
+          <svg class="theme-icon-when-auto-light"><use href="#svg-sun-with-moon"></use></svg>
+          <svg class="theme-icon-when-auto-dark"><use href="#svg-moon-with-sun"></use></svg>
+          <svg class="theme-icon-when-dark"><use href="#svg-moon"></use></svg>
+          <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
+        </button>
+      </div>
+      <label class="toc-overlay-icon toc-header-icon" for="__toc">
+        <div class="visually-hidden">Toggle table of contents sidebar</div>
+        <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
+      </label>
+    </div>
+  </header>
+  <aside class="sidebar-drawer">
+    <div class="sidebar-container">
+      
+      <div class="sidebar-sticky"><a class="sidebar-brand" href="index.html">
+  
+  
+  <span class="sidebar-brand-text">Finite Automata 1.0.0 documentation</span>
+  
+</a><form class="sidebar-search-container" method="get" action="search.html" role="search">
+  <input class="sidebar-search" placeholder="Search" name="q" aria-label="Search">
+  <input type="hidden" name="check_keywords" value="yes">
+  <input type="hidden" name="area" value="default">
+</form>
+<div id="searchbox"></div><div class="sidebar-scroll"><div class="sidebar-tree">
+  <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="src.algo.html">src.algo package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="src.custom_typing.html">src.custom_typing package</a></li>
+<li class="toctree-l1 current current-page"><a class="current reference internal" href="#">src.fa package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="src.utils.html">src.utils package</a></li>
+</ul>
+
+</div>
+</div>
+
+      </div>
+      
+    </div>
+  </aside>
+  <div class="main">
+    <div class="content">
+      <div class="article-container">
+        <a href="#" class="back-to-top muted-link">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+            <path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8v12z"></path>
+          </svg>
+          <span>Back to top</span>
+        </a>
+        <div class="content-icon-container">
+          <div class="view-this-page">
+  <a class="muted-link" href="_sources/src.fa.rst.txt" title="View this page">
+    <svg><use href="#svg-eye"></use></svg>
+    <span class="visually-hidden">View this page</span>
+  </a>
+</div>
+<div class="theme-toggle-container theme-toggle-content">
+            <button class="theme-toggle">
+              <div class="visually-hidden">Toggle Light / Dark / Auto color theme</div>
+              <svg class="theme-icon-when-auto-light"><use href="#svg-sun-with-moon"></use></svg>
+              <svg class="theme-icon-when-auto-dark"><use href="#svg-moon-with-sun"></use></svg>
+              <svg class="theme-icon-when-dark"><use href="#svg-moon"></use></svg>
+              <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
+            </button>
+          </div>
+          <label class="toc-overlay-icon toc-content-icon" for="__toc">
+            <div class="visually-hidden">Toggle table of contents sidebar</div>
+            <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
+          </label>
+        </div>
+        <article role="main" id="furo-main-content">
+          <section id="src-fa-package">
+<h1>src.fa package<a class="headerlink" href="#src-fa-package" title="Link to this heading">¶</a></h1>
+<section id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Link to this heading">¶</a></h2>
+</section>
+<section id="module-src.fa.dfa">
+<span id="src-fa-dfa-module"></span><h2>src.fa.dfa module<a class="headerlink" href="#module-src.fa.dfa" title="Link to this heading">¶</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="src.fa.dfa.DFA">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">src.fa.dfa.</span></span><span class="sig-name descname"><span class="pre">DFA</span></span><a class="reference internal" href="_modules/src/fa/dfa.html#DFA"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.fa.dfa.DFA" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Deterministic Finite Automaton (DFA) representation and operations.</p>
+<p>This class models a DFA with a set of states, an input alphabet (Sigma),
+a single initial state, a set of final (accepting) states, and a transition
+function (delta). It provides methods for constructing the DFA, converting
+to an NFA, computing the language reversal, minimizing the DFA, and checking
+isomorphism with another DFA.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="src.fa.dfa.DFA.addFinal">
+<span class="sig-name descname"><span class="pre">addFinal</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">state</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/fa/dfa.html#DFA.addFinal"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.fa.dfa.DFA.addFinal" title="Link to this definition">¶</a></dt>
+<dd><p>Mark a state as a final (accepting) state.</p>
+<p>Adds the state to the DFA if it does not already exist.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>state</strong> (<em>STATE</em>) – The state to designate as accepting.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.fa.dfa.DFA.addState">
+<span class="sig-name descname"><span class="pre">addState</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">state</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/fa/dfa.html#DFA.addState"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.fa.dfa.DFA.addState" title="Link to this definition">¶</a></dt>
+<dd><p>Add a new state to the DFA.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>state</strong> (<em>STATE</em>) – The identifier for the new state, either a string or integer.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.fa.dfa.DFA.addTransition">
+<span class="sig-name descname"><span class="pre">addTransition</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">src</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">char</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dest</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/fa/dfa.html#DFA.addTransition"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.fa.dfa.DFA.addTransition" title="Link to this definition">¶</a></dt>
+<dd><p>Add a transition for the DFA.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>src</strong> (<em>STATE</em>) – The source state for the transition.</p></li>
+<li><p><strong>char</strong> (<em>str</em>) – The input symbol that triggers the transition.</p></li>
+<li><p><strong>dest</strong> (<em>STATE</em>) – The destination state for the transition.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.fa.dfa.DFA.is_isomorphic_to">
+<span class="sig-name descname"><span class="pre">is_isomorphic_to</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">other_dfa</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/fa/dfa.html#DFA.is_isomorphic_to"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.fa.dfa.DFA.is_isomorphic_to" title="Link to this definition">¶</a></dt>
+<dd><p>Check whether this DFA is isomorphic to another DFA.</p>
+<p>Two DFAs are isomorphic if there exists a renaming of states that
+makes their transition structures and accepting behavior identical.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>other_dfa</strong> (<a class="reference internal" href="#src.fa.dfa.DFA" title="src.fa.dfa.DFA"><em>DFA</em></a>) – The DFA to compare against.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>True if the DFAs are isomorphic, False otherwise.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>bool</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.fa.dfa.DFA.minimal">
+<span class="sig-name descname"><span class="pre">minimal</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/fa/dfa.html#DFA.minimal"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.fa.dfa.DFA.minimal" title="Link to this definition">¶</a></dt>
+<dd><p>Compute and return the minimal equivalent DFA.</p>
+<p>Uses completion (adding a trap state), the table-filling algorithm to
+distinguish states, and union-find to merge indistinguishable states.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>A minimized DFA equivalent to the original.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference internal" href="#src.fa.dfa.DFA" title="src.fa.dfa.DFA">DFA</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.fa.dfa.DFA.reversal">
+<span class="sig-name descname"><span class="pre">reversal</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/fa/dfa.html#DFA.reversal"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.fa.dfa.DFA.reversal" title="Link to this definition">¶</a></dt>
+<dd><p>Construct the NFA which accepts the reverse of the language accepted by this DFA</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>An NFA accepting the reversal of the language of this DFA.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference internal" href="#src.fa.nfa.NFA" title="src.fa.nfa.NFA">NFA</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.fa.dfa.DFA.setInitial">
+<span class="sig-name descname"><span class="pre">setInitial</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">state</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/fa/dfa.html#DFA.setInitial"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.fa.dfa.DFA.setInitial" title="Link to this definition">¶</a></dt>
+<dd><p>Set the initial (start) state of the DFA.</p>
+<p>Adds the state to the DFA if it does not already exist.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>state</strong> (<em>STATE</em>) – The state to designate as the initial state.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.fa.dfa.DFA.setSigma">
+<span class="sig-name descname"><span class="pre">setSigma</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sigma_set</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/fa/dfa.html#DFA.setSigma"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.fa.dfa.DFA.setSigma" title="Link to this definition">¶</a></dt>
+<dd><p>Define the input alphabet of the DFA.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>sigma_set</strong> (<em>Set</em><em>[</em><em>str</em><em>]</em>) – A set of characters representing the DFA’s input alphabet.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.fa.dfa.DFA.toNFA">
+<span class="sig-name descname"><span class="pre">toNFA</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/fa/dfa.html#DFA.toNFA"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.fa.dfa.DFA.toNFA" title="Link to this definition">¶</a></dt>
+<dd><p>Convert this DFA into an equivalent NFA.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>A nondeterministic finite automaton representing the same language
+as this DFA.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference internal" href="#src.fa.nfa.NFA" title="src.fa.nfa.NFA">NFA</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-src.fa.nfa">
+<span id="src-fa-nfa-module"></span><h2>src.fa.nfa module<a class="headerlink" href="#module-src.fa.nfa" title="Link to this heading">¶</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="src.fa.nfa.NFA">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">src.fa.nfa.</span></span><span class="sig-name descname"><span class="pre">NFA</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">States</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">Sigma</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">Initial</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">Final</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">delta</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/fa/nfa.html#NFA"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.fa.nfa.NFA" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Nondeterministic Finite Automaton (NFA) representation and operations.</p>
+<p>Models an NFA with a set of states, an input alphabet (Sigma), an initial
+subset of states, a set of final (accepting) states, and a transition
+relation (delta). Provides methods for state and transition management,
+reversal, conversion to an equivalent DFA (subset construction), and
+language equivalence checking via DFA minimization.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="src.fa.nfa.NFA.addFinal">
+<span class="sig-name descname"><span class="pre">addFinal</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">state</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/fa/nfa.html#NFA.addFinal"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.fa.nfa.NFA.addFinal" title="Link to this definition">¶</a></dt>
+<dd><p>Mark a state as final (accepting).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>state</strong> (<em>STATE</em>) – The state to designate as accepting.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.fa.nfa.NFA.addState">
+<span class="sig-name descname"><span class="pre">addState</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">state</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/fa/nfa.html#NFA.addState"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.fa.nfa.NFA.addState" title="Link to this definition">¶</a></dt>
+<dd><p>Add a state to the NFA.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>state</strong> (<em>STATE</em>) – Identifier of the state to add.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.fa.nfa.NFA.addTransition">
+<span class="sig-name descname"><span class="pre">addTransition</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">src</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">char</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dest</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/fa/nfa.html#NFA.addTransition"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.fa.nfa.NFA.addTransition" title="Link to this definition">¶</a></dt>
+<dd><p>Add a transition to the NFA.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>src</strong> (<em>STATE</em>) – Source state for the transition.</p></li>
+<li><p><strong>char</strong> (<em>str</em>) – Input symbol triggering the transition.</p></li>
+<li><p><strong>dest</strong> (<em>STATE</em>) – Destination state reached on that symbol.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.fa.nfa.NFA.is_equivalent_to">
+<span class="sig-name descname"><span class="pre">is_equivalent_to</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">other_nfa</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/fa/nfa.html#NFA.is_equivalent_to"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.fa.nfa.NFA.is_equivalent_to" title="Link to this definition">¶</a></dt>
+<dd><p>Check language equivalence with another NFA.</p>
+<p>Converts both NFAs to minimized DFAs and tests for isomorphism.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>other_nfa</strong> (<a class="reference internal" href="#src.fa.nfa.NFA" title="src.fa.nfa.NFA"><em>NFA</em></a>) – The other NFA to compare against.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>True if the two NFAs accept the same language, False otherwise.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>bool</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.fa.nfa.NFA.reversal">
+<span class="sig-name descname"><span class="pre">reversal</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/fa/nfa.html#NFA.reversal"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.fa.nfa.NFA.reversal" title="Link to this definition">¶</a></dt>
+<dd><p>Compute the reversal of the NFA.</p>
+<p>Constructs a new NFA that accepts the reversal of the original language
+by swapping initial and final states and reversing all transitions.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The reversed NFA.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference internal" href="#src.fa.nfa.NFA" title="src.fa.nfa.NFA">NFA</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.fa.nfa.NFA.setInitial">
+<span class="sig-name descname"><span class="pre">setInitial</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">states</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/fa/nfa.html#NFA.setInitial"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.fa.nfa.NFA.setInitial" title="Link to this definition">¶</a></dt>
+<dd><p>Set the NFA’s initial states.</p>
+<p>Converts a single state or an iterable of states into the internal set
+of initial states and ensures they are included in the overall state set.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>states</strong> (<em>Union</em><em>[</em><em>STATE</em><em>, </em><em>Iterable</em><em>[</em><em>STATE</em><em>]</em><em>]</em>) – A single state or collection of states to designate as initial.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><span class="sphinx_autodoc_typehints-type"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></span></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.fa.nfa.NFA.setSigma">
+<span class="sig-name descname"><span class="pre">setSigma</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sigma_set</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/fa/nfa.html#NFA.setSigma"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.fa.nfa.NFA.setSigma" title="Link to this definition">¶</a></dt>
+<dd><p>Define the NFA’s input alphabet.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>sigma_set</strong> (<em>Set</em><em>[</em><em>str</em><em>]</em>) – Set of symbols for the input alphabet.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.fa.nfa.NFA.toDFA">
+<span class="sig-name descname"><span class="pre">toDFA</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">get_rev_dfa_map</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/fa/nfa.html#NFA.toDFA"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.fa.nfa.NFA.toDFA" title="Link to this definition">¶</a></dt>
+<dd><p>Convert this NFA to an equivalent DFA using subset construction.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>get_rev_dfa_map</strong> (<em>bool</em><em>, </em><em>optional</em>) – If True, also return a mapping from DFA state IDs back to the
+corresponding NFA state subsets.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The constructed DFA, and optionally the reverse mapping if
+requested.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="#src.fa.dfa.DFA" title="src.fa.dfa.DFA">DFA</a> or Tuple[<a class="reference internal" href="#src.fa.dfa.DFA" title="src.fa.dfa.DFA">DFA</a>, Dict[int, FrozenSet[STATE]]]</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-src.fa">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-src.fa" title="Link to this heading">¶</a></h2>
+</section>
+</section>
+
+        </article>
+      </div>
+      <footer>
+        
+        <div class="related-pages">
+          <a class="next-page" href="src.utils.html">
+              <div class="page-info">
+                <div class="context">
+                  <span>Next</span>
+                </div>
+                <div class="title">src.utils package</div>
+              </div>
+              <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
+            </a>
+          <a class="prev-page" href="src.custom_typing.html">
+              <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
+              <div class="page-info">
+                <div class="context">
+                  <span>Previous</span>
+                </div>
+                
+                <div class="title">src.custom_typing package</div>
+                
+              </div>
+            </a>
+        </div>
+        <div class="bottom-of-page">
+          <div class="left-details">
+            <div class="copyright">
+                Copyright &#169; 2025, Jaskirat Singh Maskeen
+            </div>
+            Made with <a href="https://www.sphinx-doc.org/">Sphinx</a> and <a class="muted-link" href="https://pradyunsg.me">@pradyunsg</a>'s
+            
+            <a href="https://github.com/pradyunsg/furo">Furo</a>
+            
+          </div>
+          <div class="right-details">
+            
+          </div>
+        </div>
+        
+      </footer>
+    </div>
+    <aside class="toc-drawer">
+      
+      
+      <div class="toc-sticky toc-scroll">
+        <div class="toc-title-container">
+          <span class="toc-title">
+            On this page
+          </span>
+        </div>
+        <div class="toc-tree-container">
+          <div class="toc-tree">
+            <ul>
+<li><a class="reference internal" href="#">src.fa package</a><ul>
+<li><a class="reference internal" href="#submodules">Submodules</a></li>
+<li><a class="reference internal" href="#module-src.fa.dfa">src.fa.dfa module</a><ul>
+<li><a class="reference internal" href="#src.fa.dfa.DFA"><code class="docutils literal notranslate"><span class="pre">DFA</span></code></a><ul>
+<li><a class="reference internal" href="#src.fa.dfa.DFA.addFinal"><code class="docutils literal notranslate"><span class="pre">DFA.addFinal()</span></code></a></li>
+<li><a class="reference internal" href="#src.fa.dfa.DFA.addState"><code class="docutils literal notranslate"><span class="pre">DFA.addState()</span></code></a></li>
+<li><a class="reference internal" href="#src.fa.dfa.DFA.addTransition"><code class="docutils literal notranslate"><span class="pre">DFA.addTransition()</span></code></a></li>
+<li><a class="reference internal" href="#src.fa.dfa.DFA.is_isomorphic_to"><code class="docutils literal notranslate"><span class="pre">DFA.is_isomorphic_to()</span></code></a></li>
+<li><a class="reference internal" href="#src.fa.dfa.DFA.minimal"><code class="docutils literal notranslate"><span class="pre">DFA.minimal()</span></code></a></li>
+<li><a class="reference internal" href="#src.fa.dfa.DFA.reversal"><code class="docutils literal notranslate"><span class="pre">DFA.reversal()</span></code></a></li>
+<li><a class="reference internal" href="#src.fa.dfa.DFA.setInitial"><code class="docutils literal notranslate"><span class="pre">DFA.setInitial()</span></code></a></li>
+<li><a class="reference internal" href="#src.fa.dfa.DFA.setSigma"><code class="docutils literal notranslate"><span class="pre">DFA.setSigma()</span></code></a></li>
+<li><a class="reference internal" href="#src.fa.dfa.DFA.toNFA"><code class="docutils literal notranslate"><span class="pre">DFA.toNFA()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a class="reference internal" href="#module-src.fa.nfa">src.fa.nfa module</a><ul>
+<li><a class="reference internal" href="#src.fa.nfa.NFA"><code class="docutils literal notranslate"><span class="pre">NFA</span></code></a><ul>
+<li><a class="reference internal" href="#src.fa.nfa.NFA.addFinal"><code class="docutils literal notranslate"><span class="pre">NFA.addFinal()</span></code></a></li>
+<li><a class="reference internal" href="#src.fa.nfa.NFA.addState"><code class="docutils literal notranslate"><span class="pre">NFA.addState()</span></code></a></li>
+<li><a class="reference internal" href="#src.fa.nfa.NFA.addTransition"><code class="docutils literal notranslate"><span class="pre">NFA.addTransition()</span></code></a></li>
+<li><a class="reference internal" href="#src.fa.nfa.NFA.is_equivalent_to"><code class="docutils literal notranslate"><span class="pre">NFA.is_equivalent_to()</span></code></a></li>
+<li><a class="reference internal" href="#src.fa.nfa.NFA.reversal"><code class="docutils literal notranslate"><span class="pre">NFA.reversal()</span></code></a></li>
+<li><a class="reference internal" href="#src.fa.nfa.NFA.setInitial"><code class="docutils literal notranslate"><span class="pre">NFA.setInitial()</span></code></a></li>
+<li><a class="reference internal" href="#src.fa.nfa.NFA.setSigma"><code class="docutils literal notranslate"><span class="pre">NFA.setSigma()</span></code></a></li>
+<li><a class="reference internal" href="#src.fa.nfa.NFA.toDFA"><code class="docutils literal notranslate"><span class="pre">NFA.toDFA()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a class="reference internal" href="#module-src.fa">Module contents</a></li>
+</ul>
+</li>
+</ul>
+
+          </div>
+        </div>
+      </div>
+      
+      
+    </aside>
+  </div>
+</div><script src="_static/documentation_options.js?v=8d563738"></script>
+    <script src="_static/doctools.js?v=9bcbadda"></script>
+    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/scripts/furo.js?v=5fa4622c"></script>
+    </body>
+</html>
