@@ -102,7 +102,7 @@
         }
 
         async function fetchFromPasteRs(key) {
-            const url = `https://paste.rs/${key}`;
+            const url = `https://cors-anywhere.com/https://paste.rs/${key}`;
             const res = await fetch(url);
             if (!res.ok) {
                 throw new Error(`Fetch error: ${res.status} ${res.statusText}`);
