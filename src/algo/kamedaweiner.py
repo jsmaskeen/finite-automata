@@ -542,9 +542,8 @@ class KamedaWeinerMinimize(NFA):
             if self.store_progess:
                 self.steps["Cover Enumeration"].append(minimal_cover)
             if self.verbose:
-                print(
-                    f"\nFound a minimal cover, with size {len(minimal_cover)}:\n\n{'\n'.join([str(i) for i in minimal_cover])}\n"
-                )
+                joined = "\n".join(str(i) for i in minimal_cover)
+                print(f"\nFound a minimal cover, with size {len(minimal_cover)}:\n\n{joined}\n")
                 print("Applying Intersection Rule")
 
             minimized_nfa = self.apply_intersection_rule(dfa, rsm, minimal_cover)
