@@ -3,6 +3,7 @@
   <head><meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width,initial-scale=1"/>
     <meta name="color-scheme" content="light dark"><link rel="index" title="Index" href="../../../genindex.html" /><link rel="search" title="Search" href="../../../search.html" />
+        <link rel="canonical" href="https://jsmaskeen.github.io/finite-automata/_modules/src/algo/kamedaweiner.html" />
 
     <!-- Generated with Sphinx 8.2.3 and Furo 2024.08.06 -->
         <title>src.algo.kamedaweiner - Finite Automata 1.0.0 documentation</title>
@@ -613,9 +614,7 @@
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">store_progess</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">steps</span><span class="p">[</span><span class="s2">&quot;Maximal Prime Grids&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">maxi_grids</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">verbose</span><span class="p">:</span>
-            <span class="nb">print</span><span class="p">(</span>
-                <span class="sa">f</span><span class="s2">&quot;Found Maximal Grids:</span><span class="se">\n</span><span class="si">{</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="w"> </span><span class="sa">f</span><span class="s1">&#39;Rows:</span><span class="si">{</span><span class="nb">set</span><span class="p">(</span><span class="n">i</span><span class="p">)</span><span class="si">}</span><span class="se">\n</span><span class="s1">Columns:</span><span class="si">{</span><span class="nb">set</span><span class="p">(</span><span class="n">j</span><span class="p">)</span><span class="si">}</span><span class="se">\n</span><span class="s1">&#39;</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="n">i</span><span class="p">,</span><span class="n">j</span><span class="w"> </span><span class="ow">in</span><span class="w"> </span><span class="n">maxi_grids</span><span class="p">])</span><span class="si">}</span><span class="se">\n</span><span class="s2">&quot;</span>
-            <span class="p">)</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Found Maximal Grids:</span><span class="se">\n</span><span class="s2">&quot;</span> <span class="o">+</span> <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="sa">f</span><span class="s2">&quot;Rows: </span><span class="si">{</span><span class="nb">set</span><span class="p">(</span><span class="n">i</span><span class="p">)</span><span class="si">}</span><span class="se">\n</span><span class="s2">Columns: </span><span class="si">{</span><span class="nb">set</span><span class="p">(</span><span class="n">j</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span> <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">j</span> <span class="ow">in</span> <span class="n">maxi_grids</span><span class="p">])</span> <span class="o">+</span> <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">maxi_grids</span></div>
 
 

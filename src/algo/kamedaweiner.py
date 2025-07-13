@@ -354,9 +354,7 @@ class KamedaWeinerMinimize(NFA):
         if self.store_progess:
             self.steps["Maximal Prime Grids"] = maxi_grids
         if self.verbose:
-            print(
-                f"Found Maximal Grids:\n{'\n'.join([ f'Rows:{set(i)}\nColumns:{set(j)}\n' for i,j in maxi_grids])}\n"
-            )
+            print("Found Maximal Grids:\n" + '\n'.join([f"Rows: {set(i)}\nColumns: {set(j)}" for i, j in maxi_grids]) + '\n')
         return maxi_grids
 
     def is_cover(
